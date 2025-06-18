@@ -3,29 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Special Edition!</title>
+  <title>🎉 Happy Birthday Special Edition 🎉</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: radial-gradient(circle at center, #000000, #0a0a0a);
       overflow: hidden;
+      background-color: #000;
       font-family: 'Segoe UI', sans-serif;
-      animation: fadeIn 3s ease-in;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    canvas {
+    canvas, .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
       z-index: 1;
+    }
+
+    .fade-in {
+      animation: fadeIn 3s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .title {
+      position: absolute;
+      top: 5%;
+      width: 100%;
+      text-align: center;
+      font-size: 4rem;
+      color: #ff80df;
+      text-shadow: 0 0 20px #fff, 0 0 40px #ff80df;
+      z-index: 5;
     }
 
     .heart {
@@ -35,7 +49,7 @@
       transform: translate(-50%, -50%) scale(1);
       width: 400px;
       height: 400px;
-      z-index: 3;
+      z-index: 4;
       animation: pulse 3s infinite ease-in-out;
     }
 
@@ -48,33 +62,15 @@
       position: absolute;
       width: 6px;
       height: 6px;
-      background: radial-gradient(circle, #ffe4f5, #ffc0cb);
+      background: radial-gradient(circle, #ffccf5, #ff66cc);
       border-radius: 50%;
-      box-shadow: 0 0 15px #ff99cc;
-      animation: twinkle 3s infinite;
+      box-shadow: 0 0 10px #ff99dd;
+      animation: twinkle 2s infinite;
     }
 
     @keyframes twinkle {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(1.3); }
-    }
-
-    .title {
-      position: absolute;
-      top: 8%;
-      width: 100%;
-      text-align: center;
-      color: #ffd700;
-      font-size: 64px;
-      font-weight: bold;
-      text-shadow: 0 0 20px #fff, 0 0 60px #ff69b4;
-      z-index: 4;
-      animation: glow 3s infinite ease-in-out;
-    }
-
-    @keyframes glow {
-      0%, 100% { text-shadow: 0 0 20px #fff, 0 0 60px #ff69b4; }
-      50% { text-shadow: 0 0 40px #fff, 0 0 80px #ff1493; }
+      50% { opacity: 0.5; transform: scale(1.3); }
     }
 
     .gallery {
@@ -88,67 +84,49 @@
     }
 
     .gallery img {
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
       border-radius: 15px;
-      box-shadow: 0 0 15px rgba(255,255,255,0.8);
-      transition: transform 0.5s;
+      box-shadow: 0 0 15px #fff;
+      transition: transform 0.3s;
     }
 
     .gallery img:hover {
-      transform: scale(1.2);
+      transform: scale(1.5);
+      z-index: 7;
     }
 
-    .countdown {
+    .gift-button {
       position: absolute;
-      top: 20%;
-      width: 100%;
-      text-align: center;
-      font-size: 32px;
-      color: #fff8dc;
-      z-index: 4;
-      text-shadow: 0 0 10px #ff69b4;
+      right: 20px;
+      bottom: 20px;
+      padding: 15px 25px;
+      font-size: 18px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 0 10px #fff;
+      cursor: pointer;
+      z-index: 8;
     }
   </style>
 </head>
-<body>
-  <div class="title">Happy Birthday My Love!</div>
-  <div class="countdown" id="countdown"></div>
+<body class="fade-in">
+  <div class="title">🎂 Happy Birthday My Star 🎂</div>
   <canvas id="stars"></canvas>
-  <canvas id="fireworks"></canvas>
   <div class="heart" id="heart"></div>
-
   <div class="gallery">
-    <img src="https://yourserver.com/image1.jpg" alt="Memory 1">
-    <img src="https://yourserver.com/image2.jpg" alt="Memory 2">
-    <img src="https://yourserver.com/image3.jpg" alt="Memory 3">
+    <img src="https://i.imgur.com/N4Vc3zF.jpg" alt="Memory 1">
+    <img src="https://i.imgur.com/Kv8rvmO.jpg" alt="Memory 2">
+    <img src="https://i.imgur.com/G9aPEVv.jpg" alt="Memory 3">
   </div>
-
+  <button class="gift-button" onclick="triggerGift()">🎁 Open Gift</button>
   <audio autoplay loop>
-    <source src="https://yourserver.com/custom-song.mp3" type="audio/mpeg">
+    <source src="https://www.youtube.com/watch?v=5DcKlZnmVNs" type="audio/mpeg">
   </audio>
 
   <script>
-    // Countdown
-    const countdownDate = new Date("2025-07-01T00:00:00").getTime();
-    const countdownEl = document.getElementById("countdown");
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = countdownDate - now;
-      if (distance < 0) {
-        countdownEl.innerHTML = "🎉 It's your special day! 🎉";
-        return;
-      }
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s left until Birthday!`;
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    // Stars animation
     const canvas = document.getElementById("stars");
     const ctx = canvas.getContext("2d");
     let stars = [];
@@ -157,12 +135,12 @@
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       stars = [];
-      for (let i = 0; i < 400; i++) {
+      for (let i = 0; i < 300; i++) {
         stars.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           r: Math.random() * 1.5 + 0.5,
-          speed: Math.random() * 0.4 + 0.1,
+          speed: Math.random() * 0.5 + 0.1,
           alpha: Math.random() * 0.5 + 0.3
         });
       }
@@ -174,12 +152,12 @@
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let star of stars) {
-        const gradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.r * 6);
-        gradient.addColorStop(0, `rgba(255, 255, 240, ${star.alpha})`);
+        const gradient = ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.r * 8);
+        gradient.addColorStop(0, `rgba(255, 204, 245, ${star.alpha})`);
         gradient.addColorStop(1, "rgba(0,0,0,0)");
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r * 6, 0, 2 * Math.PI);
+        ctx.arc(star.x, star.y, star.r * 8, 0, 2 * Math.PI);
         ctx.fill();
 
         star.y += star.speed;
@@ -192,7 +170,6 @@
     }
     animate();
 
-    // Heart filled with stars
     const heart = document.getElementById("heart");
     function heartShape(t) {
       const x = 16 * Math.pow(Math.sin(t), 3);
@@ -212,51 +189,11 @@
       heart.appendChild(div);
     }
 
-    // Fireworks
-    const fireworksCanvas = document.getElementById("fireworks");
-    const fCtx = fireworksCanvas.getContext("2d");
-    fireworksCanvas.width = window.innerWidth;
-    fireworksCanvas.height = window.innerHeight;
-
-    let particles = [];
-    function createFirework() {
-      const colors = ['#ff69b4', '#ffc0cb', '#ffe4e1', '#ffffcc'];
-      const count = 30 + Math.random() * 20;
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight * 0.5;
-      for (let i = 0; i < count; i++) {
-        const angle = Math.random() * 2 * Math.PI;
-        const speed = Math.random() * 4 + 1;
-        particles.push({
-          x, y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          alpha: 1,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        });
-      }
+    function triggerGift() {
+      const box = document.createElement("div");
+      box.innerHTML = "<div style='position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;color:white;font-size:2rem;text-align:center;padding:40px;'>🎁 Surprise!<br><br>Wishing you joy, laughter, and magical moments today and always! 💖<br><br><button onclick='this.parentElement.remove()' style='margin-top:20px;padding:10px 20px;font-size:1rem;'>Close</button></div>";
+      document.body.appendChild(box);
     }
-
-    function animateFireworks() {
-      fCtx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-      fCtx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
-      particles.forEach((p, i) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.05;
-        p.alpha -= 0.01;
-        if (p.alpha <= 0) particles.splice(i, 1);
-        fCtx.beginPath();
-        fCtx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        fCtx.fillStyle = p.color;
-        fCtx.globalAlpha = p.alpha;
-        fCtx.fill();
-        fCtx.globalAlpha = 1;
-      });
-      requestAnimationFrame(animateFireworks);
-    }
-    animateFireworks();
-    setInterval(createFirework, 2000);
   </script>
 </body>
 </html>
